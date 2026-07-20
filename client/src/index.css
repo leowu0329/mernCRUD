@@ -11,23 +11,59 @@ body {
   background-color: #f1f3f5;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.page-wrapper {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px;
 }
-h1{
-  margin: 20px 0 10px 0;
+
+.main-title {
+  margin: 10px 0 25px 0;
   text-align: center;
+}
+
+h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+/* 左右雙欄佈局設定 */
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* 左側欄位（Manage Users） */
+.left-column {
+  flex: 2;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* 右側欄位（表單區塊） */
+.right-column {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-card h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
 form {
   display: flex;
-  border-radius: 5px;
-  grid-gap: 10px;
-  margin-bottom: 30px;
+  flex-direction: column;
+  gap: 15px;
 }
 
 input {
@@ -35,7 +71,6 @@ input {
   border: 1px solid #0002;
   border-radius: 3px;
   font-size: 16px;
-  flex: 1;
   outline: none;
 }
 
@@ -62,37 +97,37 @@ form button:hover {
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: #435d7d;
-  padding: 15px;
-  border-radius: 3px 3px 0 0;
+  padding: 15px 20px;
 }
 
-h3 {
-  font-size: 26px;
-  text-align: center;
+.header h3 {
+  font-size: 22px;
+  text-align: left;
   color: white;
 }
 
 .table-container {
   overflow-x: auto;
-  border-radius: 0 0 3px 3px;
-  border: 1px solid #0002;
   background-color: white;
-  max-height: 450px;
-  overflow: auto
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 6px;;
 }
-thead{
+
+thead {
   position: sticky;
   top: 0;
+  background-color: #f0f2f5;
+  z-index: 1;
 }
+
 th {
   font-weight: 500;
   border-bottom: 1px solid #0001;
@@ -101,30 +136,27 @@ th {
 
 th,
 td {
-  padding: 12px 20px;
+  padding: 12px 16px;
   text-align: left;
 }
 
 td {
   color: #666;
-  font-size: 15px;
+  font-size: 14px;
 }
 
-table tr:not(:last-of-type) :where(td) {
+table tr:not(:last-of-type) td {
   border-bottom: 1px solid #0001;
 }
 
-td:has(.action-btn) {
-  width: 200px;
-}
-
 .action-btn {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   transition: 0.2s ease;
-  margin-right: 10px;
+  margin-right: 6px;
+  font-size: 13px;
 }
 
 .edit_btn {
@@ -136,14 +168,26 @@ td:has(.action-btn) {
   background-color: #d9534f;
   color: #fff;
 }
+
 .edit_btn:hover {
-  background-color: #cfd8dc; /* Lighter background on hover */
-  color: #000; /* Darker text on hover */
+  background-color: #cfd8dc;
+  color: #000;
 }
 
 .delete_btn:hover {
-  background-color: #c9302c; /* Darker background on hover */
+  background-color: #c9302c;
 }
+
 tr:hover td {
   background-color: #f8f9fa;
+}
+
+/* 響應式設計：小螢幕時改為上下堆疊 */
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  .left-column, .right-column {
+    width: 100%;
+  }
 }
