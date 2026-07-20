@@ -89,90 +89,129 @@ const App = () => {
   };
 
   return (
-    <div className="page-wrapper">
-      <header className="main-title">
-        <h1>MERN Stack Project (CRUD) - Hayyan shaikh</h1>
+    <div className="container py-4">
+      {/* 標題區塊 */}
+      <header className="text-center mb-4">
+        <h1 className="fw-bold text-dark fs-3">
+          <i className="bi bi-people-fill text-primary me-2"></i>
+          MERN Stack Project (CRUD) - Hayyan shaikh
+        </h1>
       </header>
 
-      {/* 左右雙欄主容器 */}
-      <div className="main-layout">
+      {/* 左右雙欄主容器 (使用 Bootstrap Grid) */}
+      <div className="row g-4 align-items-start">
         
         {/* 左側：Manage Users 列表區塊 */}
-        <div className="left-column">
-          <div className="header">
-            <h3>Manage Users</h3>
-          </div>
-          <div className="table-container">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Age</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users &&
-                  users.map((user, key) => (
-                    <tr key={key}>
-                      <td>{user._id}</td>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.age} Year's</td>
-                      <td>
-                        <button
-                          className="edit_btn action-btn"
-                          onClick={() => handleUpdateUser(user._id)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="delete_btn action-btn"
-                          onClick={() => handleDeleteUser(user._id)}
-                        >
-                          Delete
-                        </button>
-                      </td>
+        <div className="col-lg-8">
+          <div className="card shadow-sm border-0">
+            <div className="card-header bg-secondary text-white py-3 d-flex align-items-center">
+              <h3 className="mb-0 fs-5">
+                <i className="bi bi-table me-2"></i>Manage Users
+              </h3>
+            </div>
+            <div className="card-body p-0">
+              <div className="table-responsive" style={{ maxHeight: "500px", overflowY: "auto" }}>
+                <table className="table table-hover align-middle mb-0">
+                  <thead className="table-light sticky-top">
+                    <tr>
+                      <th className="py-3">#</th>
+                      <th className="py-3">Name</th>
+                      <th className="py-3">Email</th>
+                      <th className="py-3">Age</th>
+                      <th className="py-3 text-center">Actions</th>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {users && users.length > 0 ? (
+                      users.map((user, key) => (
+                        <tr key={key}>
+                          <td className="text-truncate" style={{ maxWidth: "100px" }}>{user._id}</td>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>{user.age} Year's</td>
+                          <td className="text-center">
+                            <button
+                              className="btn btn-sm btn-outline-secondary me-2 px-2 py-1"
+                              onClick={() => handleUpdateUser(user._id)}
+                              title="Edit"
+                            >
+                              <i className="bi bi-pencil-square"></i> Edit
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger px-2 py-1"
+                              onClick={() => handleDeleteUser(user._id)}
+                              title="Delete"
+                            >
+                              <i className="bi bi-trash"></i> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center py-4 text-muted">
+                          No users found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* 右側：Add / Update User 表單區塊 */}
-        <div className="right-column">
-          <div className="form-card">
-            <h3>{userVariant.bool ? "Add New User" : "Update User"}</h3>
-            <form onSubmit={handleAddUser}>
-              <input
-                type="text"
-                placeholder="Enter the name"
-                autoComplete="off"
-                name="name"
-                value={newUser.name}
-                onChange={handleInputChange}
-              />
-              <input
-                type="email"
-                placeholder="Enter the email"
-                autoComplete="off"
-                name="email"
-                value={newUser.email}
-                onChange={handleInputChange}
-              />
-              <input
-                type="number"
-                placeholder="Enter the age"
-                autoComplete="off"
-                name="age"
-                value={newUser.age}
-                onChange={handleInputChange}
-              />
-              <button type="submit">{userBtn}</button>
-            </form>
+        <div className="col-lg-4">
+          <div className="card shadow-sm border-0 p-3">
+            <div className="card-body">
+              <h3 className="card-title fs-5 mb-4 fw-bold text-dark">
+                <i className={`bi ${userVariant.bool ? 'bi-person-plus-fill' : 'bi-person-gear'} me-2 text-secondary`}></i>
+                {userVariant.bool ? "Add New User" : "Update User"}
+              </h3>
+              <form onSubmit={handleAddUser} className="d-flex flex-column gap-3">
+                <div>
+                  <label className="form-label text-muted small fw-medium">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter the name"
+                    autoComplete="off"
+                    name="name"
+                    value={newUser.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="form-label text-muted small fw-medium">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter the email"
+                    autoComplete="off"
+                    name="email"
+                    value={newUser.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label className="form-label text-muted small fw-medium">Age</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Enter the age"
+                    autoComplete="off"
+                    name="age"
+                    value={newUser.age}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <button type="submit" className="btn btn-secondary mt-2 py-2 fw-medium">
+                  <i className={`bi ${userVariant.bool ? 'bi-plus-lg' : 'bi-check-lg'} me-1`}></i>
+                  {userBtn}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
 
