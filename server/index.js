@@ -25,8 +25,12 @@ connectDB();
 // ==========================================
 // 設定跨來源資源共享 (CORS) 政策
 // ==========================================
-// 啟用預設的 CORS 設定，允許所有來源的跨網域請求
-app.use(cors());
+// 允許所有來源，並明確支援帶有憑證或自定義標頭的請求
+app.use(cors({
+  origin: '*', // 若正式環境需更安全，可改為前端網域陣列，例如 ["https://your-frontend.vercel.app"]
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // 註解範例：若需限制特定來源，可改用以下寫法：
 // app.use(cors({ 
@@ -44,6 +48,11 @@ app.use(express.json());
 // ==========================================
 // 將所有以 '/api' 開頭的請求導向至 apiRoutes 路由模組進行處理
 app.use('/api', apiRoutes);
+
+// 根目錄測試路由
+app.get('/', (req, res) => {
+  res.send('MERN Server is running on Vercel!');
+});
 
 // ==========================================
 // 處理所有路由的預檢請求 (Preflight Requests)
