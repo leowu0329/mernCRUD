@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 // MongoDB Atlas 叢集的連線字串（包含認證帳密、副本集與 SSL 設定）
-const mongoURI = 'mongodb://ryowu0329:im4Yc8heF0W44g3x@ac-gxryylv-shard-00-00.v8k6yif.mongodb.net:27017,ac-gxryylv-shard-00-01.v8k6yif.mongodb.net:27017,ac-gxryylv-shard-00-02.v8k6yif.mongodb.net:27017/crud?ssl=true&replicaSet=atlas-397f4r-shard-0&authSource=admin&appName=mern';
 
 /**
  * 非同步函式：負責建立與 MongoDB 資料庫的連線
@@ -9,6 +8,7 @@ const mongoURI = 'mongodb://ryowu0329:im4Yc8heF0W44g3x@ac-gxryylv-shard-00-00.v8
  */
 const connectDB = async () => {
   try {
+    const mongoURI = process.env.MONGO_URI;
     // 嘗試連線至 MongoDB
     // 註解：在現代的 Mongoose (v6+) 中，舊有的 useNewUrlParser 與 useUnifiedTopology 
     // 已經被原生內建，因此可以安全移除，讓連線設定保持簡潔。
